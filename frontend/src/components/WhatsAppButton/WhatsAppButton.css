@@ -1,0 +1,31 @@
+/* File: src/components/WhatsAppButton/WhatsAppButton.css */
+
+.whatsapp-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0; /* Add spacing before footer */
+}
+
+.whatsapp-button {
+  background-color: #25D366;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 25px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-button:hover {
+  background-color: #20c05c;
+}
+
+.whatsapp-logo {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+}

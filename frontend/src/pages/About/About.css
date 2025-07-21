@@ -1,0 +1,71 @@
+/* File: src/pages/About.css */
+
+.about-container {
+  background-color: #ffffff;
+  color: #2c2c2c;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-content {
+  max-width: 800px;
+  text-align: center;
+}
+
+.about-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  border-bottom: 4px solid orange;
+  display: inline-block;
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+  color: #ff7a00;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.about-highlights {
+  text-align: left;
+  background: #fff6e5;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+
+.about-highlights h3 {
+  font-size: 1.3rem;
+  color: #ff7a00;
+  margin-bottom: 1rem;
+}
+
+.about-highlights ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+
+.about-highlights li {
+  margin: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.about-highlights li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: #ff7a00;
+  font-weight: bold;
+}
+
+.about-footer {
+  margin-top: 2.5rem;
+  font-size: 0.9rem;
+  color: #888;
+}

@@ -1,0 +1,103 @@
+.admin-reservations {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.admin-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.table-container {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.reservation-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reservation-table thead {
+  background-color: #333;
+  color: #fff;
+}
+
+.reservation-table th,
+.reservation-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.reservation-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.no-reservations {
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+  color: #888;
+}
+
+.status {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status.pending {
+  color: orange;
+}
+
+.status.confirmed {
+  color: green;
+}
+
+.status.cancelled {
+  color: red;
+}
+
+
+.add-table-form {
+  margin-top: 2rem;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.add-table-form h3 {
+  margin-bottom: 1rem;
+}
+
+.add-table-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-table-form input {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.add-table-form button {
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.add-table-form button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
