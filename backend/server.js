@@ -111,8 +111,9 @@ connectDB();
 
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://localhost:5174',
+
   'https://cafe-resto-two.vercel.app',
-  'http://localhost:5173,http://localhost:5174',
   'https://cafe-resto-production.up.railway.app',
   'https://cafe-resto-5623.vercel.app'
 
@@ -122,10 +123,10 @@ const allowedOrigins = [
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+      callback(null, true);
     } else {
       console.error('Blocked by CORS:', origin); // for debugging
-      return callback(new Error('Not allowed by CORS'));
+      callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
