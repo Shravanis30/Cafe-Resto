@@ -170,7 +170,13 @@ const PlaceOrder = () => {
         };
 
         const endpoint = payment === "stripe" ? "/api/order/place" : "/api/order/placecod";
-        const response = await axios.post(url + endpoint, orderData, { headers: { token } });
+        // const response = await axios.post(url + endpoint, orderData, { headers: { token } });
+
+        const response = await axios.post(
+            url + endpoint,
+            orderData,
+            { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
+        );
 
         if (response.data.success) {
             if (payment === "stripe") {
@@ -203,7 +209,7 @@ const PlaceOrder = () => {
                     <input type="text" name='lastName' onChange={onChangeHandler} value={data.lastName} placeholder='Last name' required />
                 </div>
                 <input type="email" name='email' onChange={onChangeHandler} value={data.email} placeholder='Email address' required />
-                
+
                 {/* Order Type */}
                 <div className="order-type">
                     <label>

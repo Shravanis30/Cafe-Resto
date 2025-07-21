@@ -96,15 +96,31 @@
 // export default StoreContextProvider;
 
 
-// StoreContext.jsx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { createContext, useEffect, useState } from "react";
-import { food_list as default_food_list, menu_list as default_menu_list } from "../assets/assets";
+import { menu_list as default_menu_list } from "../assets/assets";
 import axios from "axios";
 
 export const StoreContext = createContext(null);
 
-const StoreContextProvider = (props) => {
-  const url = import.meta.env.VITE_API || "http://localhost:5000";
+const StoreContextProvider = ({ children }) => {
+  const url = import.meta.env.VITE_API; // Must be defined in your .env files
 
   const [food_list, setFoodList] = useState([]);
   const [cartItems, setCartItems] = useState({});
@@ -120,43 +136,7 @@ const StoreContextProvider = (props) => {
   const currency = "₹";
   const deliveryCharge = 50;
 
-  // Fetch food list from backend
-  const fetchFoodList = async () => {
-    try {
-      const res = await axios.get(`${url}/api/food/list`);
-      setFoodList(res.data.data || []);
-    } catch (err) {
-      console.error("Error fetching food list", err);
-      setFoodList(default_food_list); // fallback to local
-    }
-  };
-
-  // Load user's cart from backend
-  const loadCartData = async () => {
-    try {
-      if (!user?._id || !token) return;
-
-      const res = await axios.post(
-        `${url}/api/cart/get`,
-        { userId: user._id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (res.data.success) {
-        setCartItems(res.data.cartData || {});
-      } else {
-        console.warn("Cart load failed:", res.data.message);
-      }
-    } catch (err) {
-      console.error("Error loading cart data", err);
-    }
-  };
-
-  // Add item to cart
+  // 🛒 Add item to cart
   const addToCart = async (itemId) => {
     setCartItems((prev) => ({
       ...prev,
@@ -167,27 +147,24 @@ const StoreContextProvider = (props) => {
       try {
         await axios.post(
           `${url}/api/cart/add`,
-          {
-            itemId,
-            userId: user._id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          { itemId, userId: user._id },
+          { headers: { Authorization: `Bearer ${token}` } }
         );
       } catch (err) {
-        console.error("Add to cart error", err);
+        console.error("Add to cart error:", err);
       }
     }
   };
 
-  // Remove item from cart
+  // 🗑 Remove item from cart
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => {
-      const updated = { ...prev, [itemId]: (prev[itemId] || 1) - 1 };
-      if (updated[itemId] <= 0) delete updated[itemId];
+      const updated = { ...prev };
+      if (updated[itemId] > 1) {
+        updated[itemId] -= 1;
+      } else {
+        delete updated[itemId];
+      }
       return updated;
     });
 
@@ -195,23 +172,16 @@ const StoreContextProvider = (props) => {
       try {
         await axios.post(
           `${url}/api/cart/remove`,
-          {
-            itemId,
-            userId: user._id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          { itemId, userId: user._id },
+          { headers: { Authorization: `Bearer ${token}` } }
         );
       } catch (err) {
-        console.error("Remove from cart error", err);
+        console.error("Remove from cart error:", err);
       }
     }
   };
 
-  // Calculate total amount
+  // 💰 Total cart amount
   const getTotalCartAmount = () => {
     return Object.entries(cartItems).reduce((total, [id, quantity]) => {
       const item = food_list.find((food) => food._id === id);
@@ -219,7 +189,36 @@ const StoreContextProvider = (props) => {
     }, 0);
   };
 
-  // Load on mount
+  // 📦 Fetch food list from backend
+  const fetchFoodList = async () => {
+    try {
+      const res = await axios.get(`${url}/api/food/list`);
+      setFoodList(res.data.data || []);
+    } catch (err) {
+      console.error("Error fetching food list from backend:", err);
+    }
+  };
+
+  // 🧺 Load cart from backend
+  const loadCartData = async () => {
+    if (!user?._id || !token) return;
+    try {
+      const res = await axios.post(
+        `${url}/api/cart/get`,
+        { userId: user._id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.data.success) {
+        setCartItems(res.data.cartData || {});
+      } else {
+        console.warn("Failed to load cart:", res.data.message);
+      }
+    } catch (err) {
+      console.error("Error loading cart data:", err);
+    }
+  };
+
+  // 🔁 On mount: fetch food and cart
   useEffect(() => {
     const init = async () => {
       await fetchFoodList();
@@ -228,15 +227,12 @@ const StoreContextProvider = (props) => {
     init();
   }, []);
 
-  // Fallback: use static menu list from assets
-  const menu_list = default_menu_list;
-
   return (
     <StoreContext.Provider
       value={{
         url,
         food_list,
-        menu_list,
+        menu_list: default_menu_list,
         cartItems,
         addToCart,
         removeFromCart,
@@ -251,7 +247,7 @@ const StoreContextProvider = (props) => {
         deliveryCharge,
       }}
     >
-      {props.children}
+      {children}
     </StoreContext.Provider>
   );
 };
