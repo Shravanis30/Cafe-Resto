@@ -4,12 +4,15 @@ import { listOrders, placeOrder,updateStatus,userOrders, verifyOrder, placeOrder
 
 const orderRouter = express.Router();
 
-orderRouter.get("/list",listOrders);
+// orderRouter.get("/list",listOrders);
 orderRouter.post("/userorders",authMiddleware,userOrders);
 orderRouter.post("/place",authMiddleware,placeOrder);
-orderRouter.post("/status",updateStatus);
+// orderRouter.post("/status",updateStatus);
 orderRouter.post("/verify",verifyOrder);
 orderRouter.post("/placecod",authMiddleware,placeOrderCod);
 orderRouter.get("/verify", verifyOrderGet);
+
+router.get('/list', authenticateUser, getAllOrders);
+router.post('/status', authenticateUser, updateOrderStatus);
 
 export default orderRouter;
