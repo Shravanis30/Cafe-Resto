@@ -87,6 +87,7 @@ app.use(limiter);
 
 // JSON Parser
 app.use(express.json());
+app.set("trust proxy", 1); // trust the first proxy (required for rate limiting and correct IP logging)
 
 // ✅ CORS Setup
 const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map(o => o.trim()) || [];
