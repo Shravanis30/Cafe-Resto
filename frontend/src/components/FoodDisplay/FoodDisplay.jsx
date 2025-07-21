@@ -1,46 +1,3 @@
-// import React, { useContext } from 'react'
-// import './FoodDisplay.css'
-// import FoodItem from '../FoodItem/FoodItem'
-// import { StoreContext } from '../../Context/StoreContext'
-
-// const FoodDisplay = ({ category }) => {
-
-//   const { food_list } = useContext(StoreContext);
-
-//   return (
-//     <div className='food-display' id='food-display'>
-//       <h2>Top dishes</h2>
-//       <div className='food-display-list'>
-//         {/* {food_list.map((item)=>{
-//           if (category==="All" || category===item.category) {
-//             return <FoodItem key={item._id} image={item.image} name={item.name} desc={item.description} price={item.price} id={item._id}/>
-//           }
-//         })} */}
-//         {food_list?.length > 0 && food_list.map((item) => {
-//           if (category === "All" || category === item.category) {
-//             return (
-//               <FoodItem
-//                 key={item._id}
-//                 image={item.image}
-//                 name={item.name}
-//                 desc={item.description}
-//                 price={item.price}
-//                 id={item._id}
-//               />
-//             );
-//           }
-//         })}
-
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default FoodDisplay
-
-
-
-// FoodDisplay.jsx
 import React, { useContext } from 'react';
 import './FoodDisplay.css';
 import FoodItem from '../FoodItem/FoodItem';
@@ -53,26 +10,32 @@ const FoodDisplay = ({ category }) => {
     <div className="food-display" id="food-display">
       <h2>Top dishes</h2>
       <div className="food-display-list">
-        
         {food_list.length > 0 &&
-          food_list.map((item) => {
+          food_list.map((item, index) => {
             if (category === 'All' || category === item.category) {
+              const imageUrl = `${import.meta.env.VITE_API}/images/${item.image}`;
+              console.log("Rendering item:", {
+                id: item._id,
+                name: item.name,
+                image: item.image,
+                imageUrl,
+              });
+              console.log("Image URL:", `${import.meta.env.VITE_API}/images/${item.image}`);
+
+
               return (
                 <FoodItem
-                  key={item._id}
-                  image={`${import.meta.env.VITE_API}/images/${item.image}`}
-
-                  // image={`${import.meta.env.VITE_API}/images/${item.image}`}
+                  key={`${item._id}-${index}`}  // make key unique just in case
+                  image={imageUrl}
                   name={item.name}
                   desc={item.description}
                   price={item.price}
                   id={item._id}
                 />
-                
               );
             }
+            return null;
           })}
-          
       </div>
     </div>
   );
