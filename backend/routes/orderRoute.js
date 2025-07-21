@@ -13,7 +13,7 @@ orderRouter.post("/verify",verifyOrder);
 orderRouter.post("/placecod",authMiddleware,placeOrderCod);
 orderRouter.get("/verify", verifyOrderGet);
 
-router.get('/list', authenticateUser, getAllOrders);
-router.post('/status', authenticateUser, updateOrderStatus);
+orderRouter.get('/list', authenticateUser, listOrders);
+orderRouter.post('/status', authenticateUser, updateStatus);
 
 export default orderRouter;
