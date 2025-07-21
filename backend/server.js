@@ -91,17 +91,24 @@ app.use(express.json());
 // ✅ CORS Setup
 const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map(o => o.trim()) || [];
 
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       return callback(null, true);
+//     }
+//     console.log(`Blocked by CORS: ${origin}`);
+//     return callback(new Error("Not allowed by CORS"));
+//   },
+//   credentials: true,
+// }));
+
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    console.log(`Blocked by CORS: ${origin}`);
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
 }));
-
 // Images
 app.use("/images", express.static("uploads"));
 

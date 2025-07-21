@@ -239,7 +239,6 @@
 // export default LoginPopup;
 
 
-
 import React, { useContext, useState } from 'react';
 import './LoginPopup.css';
 import { assets } from '../../assets/assets';
@@ -256,8 +255,8 @@ const LoginPopup = ({ setShowLogin }) => {
     password: '',
   });
 
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
+  const onChangeHandler = (event) => {
+    const { name, value } = event.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -266,34 +265,36 @@ const LoginPopup = ({ setShowLogin }) => {
     const endpoint = currState === 'Login' ? '/api/user/login' : '/api/user/register';
 
     try {
-      const res = await axios.post(`${url}${endpoint}`, data);
-      const { success, token, message } = res.data;
-
-      if (!success || !token) {
-        toast.error(message || 'Authentication failed');
-        return;
-      }
-
-      // Store token
-      setToken(token);
-      localStorage.setItem('token', token);
-
-      // Fetch user info
-      const userRes = await axios.get(`${url}/api/user/me`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const response = await axios.post(`${url}${endpoint}`, data, {
+        withCredentials: true, // to send cookies if needed
       });
 
-      if (userRes.data.success) {
-        localStorage.setItem('user', JSON.stringify(userRes.data.user));
-        loadCartData(); // Sync cart
-        toast.success(currState === 'Login' ? 'Login successful!' : 'Account created!');
-        setShowLogin(false);
+      if (response.data.success) {
+        const token = response.data.token;
+        setToken(token);
+        localStorage.setItem('token', token);
+
+        const res = await axios.get(`${url}/api/user/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
+
+        if (res.data.success) {
+          localStorage.setItem('user', JSON.stringify(res.data.user));
+          loadCartData();
+          toast.success(currState === 'Login' ? 'Login successful!' : 'Account created!');
+          setShowLogin(false);
+        } else {
+          toast.error('Failed to fetch user info');
+        }
       } else {
-        toast.error('Failed to load user data.');
+        toast.error(response.data.message || 'Login/Register failed');
       }
     } catch (err) {
-      console.error('Login/Register error:', err);
-      toast.error(err.response?.data?.message || 'Something went wrong. Please try again.');
+      console.error('Login/Register error:', err.response?.data || err.message);
+      toast.error(err?.response?.data?.message || 'Something went wrong. Please try again.');
     }
   };
 
@@ -302,7 +303,11 @@ const LoginPopup = ({ setShowLogin }) => {
       <form onSubmit={onLogin} className="login-popup-container">
         <div className="login-popup-title">
           <h2>{currState}</h2>
-          <img src={assets.cross_icon} alt="Close" onClick={() => setShowLogin(false)} />
+          <img
+            onClick={() => setShowLogin(false)}
+            src={assets.cross_icon}
+            alt="Close"
+          />
         </div>
 
         <div className="login-popup-inputs">
@@ -340,22 +345,22 @@ const LoginPopup = ({ setShowLogin }) => {
 
         <div className="login-popup-condition">
           <input type="checkbox" required />
-          <p>By continuing, I agree to the terms of use & privacy policy.</p>
+          <p>
+            By continuing, I agree to the terms of use & privacy policy.
+          </p>
         </div>
 
-        <p>
-          {currState === 'Login' ? (
-            <>
-              Create a new account?{' '}
-              <span onClick={() => setCurrState('Sign Up')}>Click here</span>
-            </>
-          ) : (
-            <>
-              Already have an account?{' '}
-              <span onClick={() => setCurrState('Login')}>Login here</span>
-            </>
-          )}
-        </p>
+        {currState === 'Login' ? (
+          <p>
+            Create a new account?{' '}
+            <span onClick={() => setCurrState('Sign Up')}>Click here</span>
+          </p>
+        ) : (
+          <p>
+            Already have an account?{' '}
+            <span onClick={() => setCurrState('Login')}>Login here</span>
+          </p>
+        )}
       </form>
     </div>
   );
