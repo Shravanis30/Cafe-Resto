@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 
 const LoginPopup = ({ setShowLogin }) => {
 
-    const { setToken, url,loadCartData } = useContext(StoreContext)
+    const { setToken, url, loadCartData } = useContext(StoreContext)
     const [currState, setCurrState] = useState("Sign Up");
 
     const [data, setData] = useState({
@@ -22,27 +22,64 @@ const LoginPopup = ({ setShowLogin }) => {
         setData(data => ({ ...data, [name]: value }))
     }
 
-    const onLogin = async (e) => {
-        e.preventDefault()
+    // const onLogin = async (e) => {
+    //     e.preventDefault()
 
-        let new_url = url;
-        if (currState === "Login") {
-            new_url += "/api/user/login";
+    //     let new_url = url;
+    //     if (currState === "Login") {
+    //         new_url += "/api/user/login";
+    //     }
+    //     else {
+    //         new_url += "/api/user/register"
+    //     }
+    //     const response = await axios.post(new_url, data);
+    //     if (response.data.success) {
+    //         setToken(response.data.token)
+    //         localStorage.setItem("token", response.data.token)
+    //         loadCartData({token:response.data.token})
+    //         setShowLogin(false)
+    //     }
+    //     else {
+    //         toast.error(response.data.message)
+    //     }
+    // }
+
+
+    const onLogin = async (e) => {
+        e.preventDefault();
+
+        let endpoint = currState === "Login" ? "/api/user/login" : "/api/user/register";
+
+        try {
+            const response = await axios.post(url + endpoint, data);
+            if (response.data.success) {
+                const token = response.data.token;
+                setToken(token);
+                localStorage.setItem("token", token);
+
+                // Get user data (optional: you can call a /me route, or decode JWT)
+                const res = await axios.get(`${url}/api/user/me`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (res.data.success) {
+                    const userData = res.data.user;
+                    localStorage.setItem("user", JSON.stringify(userData));
+                    // Set context
+                    loadCartData(); // token is already in context
+                    setShowLogin(false);
+                } else {
+                    toast.error("Failed to fetch user info");
+                }
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (err) {
+            console.error("Login error:", err);
+            toast.error("Something went wrong. Please try again.");
         }
-        else {
-            new_url += "/api/user/register"
-        }
-        const response = await axios.post(new_url, data);
-        if (response.data.success) {
-            setToken(response.data.token)
-            localStorage.setItem("token", response.data.token)
-            loadCartData({token:response.data.token})
-            setShowLogin(false)
-        }
-        else {
-            toast.error(response.data.message)
-        }
-    }
+    };
+
 
     return (
         <div className='login-popup'>
@@ -57,7 +94,7 @@ const LoginPopup = ({ setShowLogin }) => {
                 </div>
                 <button>{currState === "Login" ? "Login" : "Create account"}</button>
                 <div className="login-popup-condition">
-                    <input type="checkbox" name="" id="" required/>
+                    <input type="checkbox" name="" id="" required />
                     <p>By continuing, i agree to the terms of use & privacy policy.</p>
                 </div>
                 {currState === "Login"

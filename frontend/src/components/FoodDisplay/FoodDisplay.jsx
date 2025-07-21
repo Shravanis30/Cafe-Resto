@@ -53,6 +53,7 @@ const FoodDisplay = ({ category }) => {
     <div className="food-display" id="food-display">
       <h2>Top dishes</h2>
       <div className="food-display-list">
+        
         {food_list.length > 0 &&
           food_list.map((item) => {
             if (category === 'All' || category === item.category) {
@@ -60,14 +61,18 @@ const FoodDisplay = ({ category }) => {
                 <FoodItem
                   key={item._id}
                   image={`${import.meta.env.VITE_API}/images/${item.image}`}
+
+                  // image={`${import.meta.env.VITE_API}/images/${item.image}`}
                   name={item.name}
                   desc={item.description}
                   price={item.price}
                   id={item._id}
                 />
+                
               );
             }
           })}
+          
       </div>
     </div>
   );
