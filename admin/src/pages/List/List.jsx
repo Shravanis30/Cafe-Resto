@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './List.css'
-import { url, currency } from '../../assets/assets'
+// import { url, currency } from '../../assets/assets'
+import { currency } from '../../assets/assets'
+
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -9,7 +11,9 @@ const List = () => {
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
-    const response = await axios.get(`${import.meta.env.VITE_API}/api/food/list`)
+    // const response = await axios.get(`${import.meta.env.VITE_API}/api/food/list`)
+    const url = import.meta.env.VITE_API;
+    const response = await axios.get(`${url}/api/food/list`, { withCredentials: true })
     if (response.data.success) {
       setList(response.data.data);
     }
@@ -19,7 +23,9 @@ const List = () => {
   }
 
   const removeFood = async (foodId) => {
-    const response = await axios.post(`${import.meta.env.VITE_API}/api/food/remove`, {
+    // const response = await axios.post(`${import.meta.env.VITE_API}/api/food/remove`, {
+    const response = await axios.post(`${url}/api/food/remove`, {
+
       id: foodId
     })
     await fetchList();

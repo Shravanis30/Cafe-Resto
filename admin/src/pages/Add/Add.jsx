@@ -126,12 +126,19 @@ const Add = () => {
     formData.append('image', image);
 
     try {
+      // const res = await axios.post(`${url}/api/food/add`, formData, {
+      //   withCredentials: true,
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // });
       const res = await axios.post(`${url}/api/food/add`, formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
+
       toast.success("Item added successfully");
     } catch (error) {
       console.error("Error:", error);

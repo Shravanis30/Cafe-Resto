@@ -9,7 +9,9 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {
-    const response = await axios.get(`${url}/api/order/list`)
+    // const response = await axios.get(`${url}/api/order/list`)
+    const url = import.meta.env.VITE_API;
+    const response = await axios.get(`${url}/api/order/list`, { withCredentials: true })
     if (response.data.success) {
       setOrders(response.data.data.reverse());
     }
@@ -20,7 +22,9 @@ const Order = () => {
 
   const statusHandler = async (event, orderId) => {
     console.log(event, orderId);
-    const response = await axios.post(`${import.meta.env.VITE_API}/api/order/status`, {
+    // const response = await axios.post(`${import.meta.env.VITE_API}/api/order/status`, {
+    const response = await axios.post(`${url}/api/order/status`, {
+
       orderId,
       status: event.target.value
     })
