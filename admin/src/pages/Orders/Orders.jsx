@@ -208,19 +208,8 @@ const Order = () => {
   const url = import.meta.env.VITE_API;
 
   const fetchAllOrders = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      toast.error("Unauthorized: Please login first.");
-      return;
-    }
-
     try {
-      const response = await axios.get(`${url}/api/order/list`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
+      const response = await axios.get(`${url}/api/order/list`);
 
       if (response.data.success) {
         setOrders(response.data.data.reverse());
@@ -233,40 +222,27 @@ const Order = () => {
     }
   };
 
-  const statusHandler = async (event, orderId) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      toast.error("Unauthorized: Please login first.");
-      return;
-    }
 
-    const newStatus = event.target.value;
-    try {
-      const response = await axios.post(
-        `${url}/api/order/status`,
-        {
-          orderId,
-          status: newStatus,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        }
-      );
+ const statusHandler = async (event, orderId) => {
+  const newStatus = event.target.value;
+  try {
+    const response = await axios.post(`${url}/api/order/status`, {
+      orderId,
+      status: newStatus,
+    });
 
-      if (response.data.success) {
-        toast.success('Order status updated');
-        await fetchAllOrders();
-      } else {
-        toast.error('Failed to update status');
-      }
-    } catch (err) {
-      console.error('Status update error:', err);
-      toast.error('Error updating status');
+    if (response.data.success) {
+      toast.success('Order status updated');
+      await fetchAllOrders();
+    } else {
+      toast.error('Failed to update status');
     }
-  };
+  } catch (err) {
+    console.error('Status update error:', err);
+    toast.error('Error updating status');
+  }
+};
+
 
   useEffect(() => {
     fetchAllOrders();
