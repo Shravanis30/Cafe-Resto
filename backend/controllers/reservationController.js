@@ -3,7 +3,7 @@ import Reservation from '../models/reservationModel.js';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const FRONTEND_URL = 'http://localhost:5173';
+const FRONTEND_URL = 'https://cafe-resto-5623.vercel.app';
 
 export const getTables = async (req, res) => {
   const tables = await Table.find();

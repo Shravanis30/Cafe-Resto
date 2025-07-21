@@ -15,7 +15,7 @@ const AdminReservation = () => {
 
   const fetchReservations = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/reservation/admin/all`);
+      const res = await axios.get(`${import.meta.env.VITE_API}/reservation/admin/all`);
       setReservations(res.data.data || []);
     } catch (err) {
       console.error('Error fetching reservations:', err);
@@ -28,7 +28,7 @@ const AdminReservation = () => {
 
     setCreating(true);
     try {
-      await axios.post(`${BASE_URL}/reservation/admin/table/create`, { name: tableName });
+      await axios.post(`${import.meta.env.VITE_API}/reservation/admin/table/create`, { name: tableName });
       alert('Table created successfully!');
       setTableName('');
     } catch (error) {

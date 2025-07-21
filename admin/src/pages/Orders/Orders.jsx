@@ -20,7 +20,7 @@ const Order = () => {
 
   const statusHandler = async (event, orderId) => {
     console.log(event, orderId);
-    const response = await axios.post(`${url}/api/order/status`, {
+    const response = await axios.post(`${import.meta.env.VITE_API}/api/order/status`, {
       orderId,
       status: event.target.value
     })
