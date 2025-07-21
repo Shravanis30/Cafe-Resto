@@ -86,34 +86,54 @@ import orderRouter from "./routes/orderRoute.js";
 import reservationRouter from './routes/reservationRoutes.js';
 
 const app = express();
-const port = process.env.PORT || 5000;
-
-// 👉 Required when behind a proxy like Railway or Vercel for IP-based middlewares
 app.set("trust proxy", 1);
 
-// 🚀 DATABASE
+const port = process.env.PORT || 5000;
+
+
 connectDB();
 
-// ✅ CORS SETUP
-const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map(origin => origin.trim());
+// const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map(origin => origin.trim());
 
-// ✅ CORS Middleware
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       return callback(null, true);
+//     }
+//     console.log("❌ CORS blocked origin:", origin);
+//     return callback(new Error("Not allowed by CORS"));
+//   },
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+// };
+// app.use(cors(corsOptions));
+
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://cafe-resto-two.vercel.app',
+  'http://localhost:5173,http://localhost:5174',
+  'https://cafe-resto-production.up.railway.app',
+  'https://cafe-resto-5623.vercel.app'
+
+];
+
+
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+      callback(null, true);
+    } else {
+      console.error('Blocked by CORS:', origin); // for debugging
+      callback(new Error('Not allowed by CORS'));
     }
-    console.log("❌ CORS blocked origin:", origin);
-    return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
 };
+
 app.use(cors(corsOptions));
-// Allow preflight requests globally
 app.options('*', cors(corsOptions));
 
-// ✅ Rate Limiting - AFTER setting trust proxy
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -122,13 +142,10 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// ✅ JSON Body Parser
 app.use(express.json());
 
-// ✅ Static Files
 app.use("/images", express.static("uploads"));
 
-// ✅ All Routes
 app.use("/api/user", userRouter);
 app.use("/api/food", foodRouter);
 app.use("/api/cart", cartRouter);
