@@ -133,10 +133,25 @@
 //   }
 // };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import dotenv from "dotenv";
 import Table from '../models/tableModel.js';
 import Reservation from '../models/reservationModel.js';
 import Stripe from 'stripe';
+import Notification from "../models/notificationModel.js";
 
 dotenv.config(); // If not already called in entry file
 
@@ -194,6 +209,11 @@ export const bookTable = async (req, res) => {
 
   // Tentatively reserve the table
   await Table.findByIdAndUpdate(tableId, { status: 'reserved' });
+  await Notification.create({
+    type: 'reservation',
+    message: `Table ${table.name} reserved by user ${userId}`,
+    resourceId: reservation._id,
+  });
 
   res.json({ success: true, session_url: session.url });
 };

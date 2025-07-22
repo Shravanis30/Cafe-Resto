@@ -30,6 +30,7 @@ import express from 'express';
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
+import foodModel from '../models/foodModel.js';
 
 import { addFood, listFood, removeFood } from '../controllers/foodController.js';
 
@@ -58,5 +59,15 @@ const upload = multer({ storage, fileFilter }); // Include fileFilter if needed
 foodRouter.get("/list", listFood);
 foodRouter.post("/add", upload.single('image'), addFood);
 foodRouter.post("/remove", removeFood);
+foodRouter.get("/stats", async (req, res) => {
+  try {
+    const count = await foodModel.countDocuments({});
+    res.json({ success: true, totalMenuItems: count });
+  } catch (error) {
+    console.error("Error fetching food stats:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch food stats" });
+  }
+});
+
 
 export default foodRouter;

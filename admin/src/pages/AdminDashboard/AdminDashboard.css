@@ -1,3 +1,4 @@
+
 :root {
   --main-orange: #ff9800;
   --main-orange-dark: #e07300;
@@ -292,4 +293,128 @@
   }
   .admin-dashboard { border-radius: 0; }
   .admin-reservation-table-section, .admin-explore-more { padding: 12px 1vw 9px 1vw;}
+}
+
+
+.dashboard-card-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.view-more {
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.view-more:hover {
+  background-color: #e27200;
+}
+
+.mini-order {
+  background: #fff7ec;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-item {
+  background-color: #fff8e6;
+  padding: 12px 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(255, 152, 0, 0.1);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+
+
+/* New Responsive Adjustments */
+@media (max-width: 1024px) {
+  .dashboard-metrics, .dashboard-items-row {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .dashboard-card, .dashboard-card-list {
+    min-width: 100%;
+  }
+
+  .reservation-table th, .reservation-table td {
+    font-size: 0.9rem;
+    padding: 6px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-card-list-title {
+    font-size: 1rem;
+  }
+
+  .order-item {
+    padding: 10px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .card-title {
+    font-size: 0.9rem;
+  }
+
+  .card-value {
+    font-size: 1rem;
+  }
+
+  .dashboard-card {
+    padding: 14px 12px;
+  }
+
+  .reservation-table {
+    font-size: 0.85rem;
+  }
+
+  .explore-links button {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .good-morning, .admin-name {
+    text-align: center;
+  }
+
+  .explore-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .view-more {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
 }

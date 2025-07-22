@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home/Home'
 import AdminReservation from './pages/AdminReservation/AdminReservation'
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard'
+import Customers from './pages/Customer/Customer'
+import Sales from './pages/Sales/Sales'
 
 const App = () => {
   return (
@@ -29,7 +31,8 @@ const App = () => {
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/reservations" element={<AdminReservation />} />
-
+          <Route path="/customers" element={<Customers />} />
+          <Route path="/sales" element={<Sales />} />
 
         </Routes>
       </div>

@@ -1,0 +1,41 @@
+.sales-page {
+  padding: 2rem;
+  background: #fff;
+}
+
+.sales-section {
+  margin-bottom: 2rem;
+}
+
+.sales-section h3 {
+  color: #ff9800;
+  margin-bottom: 6px;
+}
+
+.sales-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fffef9;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px #faab2a10;
+  overflow: hidden;
+}
+
+.sales-section th, .sales-section td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.sales-section th {
+  background-color: #fff4e2;
+  color: #e27200;
+}
+
+@media (max-width: 700px) {
+  .sales-section table,
+  .sales-section th,
+  .sales-section td {
+    font-size: 0.9rem;
+  }
+}
