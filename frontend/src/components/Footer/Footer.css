@@ -52,3 +52,26 @@
         text-align: center;
     }
 }
+
+.footer-social-icons img {
+  width: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.footer-social-icons img:hover {
+  transform: scale(1.1);
+}
+
+
+.footer-social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-social-icons a {
+  font-size: 24px;
+  color: white;
+  transition: color 0.3s;
+}
+

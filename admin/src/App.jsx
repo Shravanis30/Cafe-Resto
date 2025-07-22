@@ -28,6 +28,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/reservations" element={<AdminReservation />} />
 
+
         </Routes>
       </div>
     </div>

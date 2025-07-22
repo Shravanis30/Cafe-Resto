@@ -1,11 +1,15 @@
 import React, { useContext, useState } from 'react';
 import './Navbar.css';
-import { assets } from '../../assets/assets';
 import { Link, useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../Context/StoreContext';
+import { FaShoppingBasket, FaUserCircle, FaBars, FaSignOutAlt, FaClipboardList } from 'react-icons/fa';
+import { assets } from '../../assets/assets'; // Make sure logo is in assets
 
 const Navbar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
   const { getTotalCartAmount, token, setToken } = useContext(StoreContext);
   const navigate = useNavigate();
 
@@ -17,40 +21,68 @@ const Navbar = ({ setShowLogin }) => {
 
   return (
     <div className='navbar'>
-      <Link to='/'><img className='logo' src={assets.logo} alt="Logo" /></Link>
+      {/* Logo */}
+      <Link to='/' onClick={() => setMenu('home')}>
+        <img className='logo' src={assets.logo} alt="Logo" />
+      </Link>
 
-      <ul className="navbar-menu">
+      {/* Desktop Menu */}
+      <ul className={`navbar-menu ${mobileMenuOpen ? "show" : ""}`}>
         <Link to="/" onClick={() => setMenu("home")} className={menu === "home" ? "active" : ""}>Home</Link>
         <Link to="/menu" onClick={() => setMenu("menu")} className={menu === "menu" ? "active" : ""}>Menu</Link>
         <Link to="/about" onClick={() => setMenu("about")} className={menu === "about" ? "active" : ""}>About</Link>
-        <a href="#footer" onClick={() => setMenu("contact")} className={menu === "contact" ? "active" : ""}>Contact Us</a>
+        <Link to="/contact" onClick={() => setMenu("contact")} className={menu === "contact" ? "active" : ""}>Contact Us</Link>
+
+        {/* Mobile Auth Buttons */}
+        {/* {!token ? (
+          <button className='mobile-login-btn' onClick={() => setShowLogin(true)}>Sign In</button>
+        ) : (
+          <>
+            <li onClick={() => navigate('/myorders')}>
+              <FaClipboardList />
+              <span>Orders</span>
+            </li>
+            <li onClick={logout}>
+              <FaSignOutAlt />
+              <span>Logout</span>
+            </li>
+          </>
+        )} */}
+        {!token && (
+          <button className='mobile-login-btn' onClick={() => setShowLogin(true)}>Sign In</button>
+        )}
+
       </ul>
 
+      {/* Right Section */}
       <div className="navbar-right">
-        <img src={assets.search_icon} alt="Search" />
-        <Link to='/cart' className='navbar-search-icon'>
-          <img src={assets.basket_icon} alt="Cart" />
+        <Link to='/cart' className='navbar-cart'>
+          <FaShoppingBasket size={22} />
           <div className={getTotalCartAmount() > 0 ? "dot" : ""}></div>
         </Link>
 
         {!token ? (
           <button onClick={() => setShowLogin(true)}>Sign In</button>
         ) : (
-          <div className='navbar-profile'>
-            <img src={assets.profile_icon} alt="Profile" />
-            <ul className='navbar-profile-dropdown'>
-              <li onClick={() => navigate('/myorders')}>
-                <img src={assets.bag_icon} alt="" />
-                <p>Orders</p>
-              </li>
-              <hr />
-              <li onClick={logout}>
-                <img src={assets.logout_icon} alt="" />
-                <p>Logout</p>
-              </li>
-            </ul>
+          <div className="navbar-profile-wrapper">
+            <FaUserCircle size={26} onClick={() => setProfileOpen(!profileOpen)} />
+            {profileOpen && (
+              <div className="navbar-profile-dropdown">
+                <div onClick={() => { setProfileOpen(false); navigate('/myorders'); }}>
+                  <FaClipboardList /> My Orders
+                </div>
+                <div onClick={() => { setProfileOpen(false); logout(); }}>
+                  <FaSignOutAlt /> Logout
+                </div>
+              </div>
+            )}
           </div>
         )}
+
+
+        <div className="navbar-hamburger" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <FaBars size={24} />
+        </div>
       </div>
     </div>
   );

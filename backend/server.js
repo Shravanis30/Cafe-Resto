@@ -92,27 +92,9 @@ const port = process.env.PORT || 5000;
 
 
 connectDB();
-
-// const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map(origin => origin.trim());
-
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       return callback(null, true);
-//     }
-//     console.log("❌ CORS blocked origin:", origin);
-//     return callback(new Error("Not allowed by CORS"));
-//   },
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-// };
-// app.use(cors(corsOptions));
-
-
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
-
   'https://cafe-resto-two.vercel.app',
   'https://cafe-resto-production.up.railway.app',
   'https://cafe-resto-5623.vercel.app'

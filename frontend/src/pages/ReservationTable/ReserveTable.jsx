@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import './ReserveTable.css';
 import { StoreContext } from '../../Context/StoreContext';
 
-const BASE_URL = import.meta.env.VITE_API;
+const BASE_URL = import.meta.env.VITE_API || 'https://cafe-resto-production.up.railway.app';
 
 const ReserveTable = () => {
   const { token } = useContext(StoreContext);
@@ -19,12 +19,13 @@ const ReserveTable = () => {
 
   const fetchTables = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/reservation/tables`);
+      const res = await axios.get(`${BASE_URL}/api/reservation/tables`);
       setTables(res.data.tables || []);
     } catch (err) {
       toast.error('Failed to load tables');
     }
   };
+
 
   const handleReserve = async () => {
     if (!selectedTable || members < 1) return toast.warn('Please select a table and number of members');
@@ -32,7 +33,7 @@ const ReserveTable = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `${BASE_URL}/reservation/book`,
+        `${BASE_URL}/api/reservation/book`, // ✅ Fixed endpoint
         { tableId: selectedTable },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -43,6 +44,7 @@ const ReserveTable = () => {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="reserve-container">

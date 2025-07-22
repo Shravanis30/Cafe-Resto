@@ -2,23 +2,28 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AdminReservation.css';
 
-const BASE_URL = import.meta.env.VITE_API;
+
+const BASE_URL = import.meta.env.VITE_API || 'https://cafe-resto-production.up.railway.app';
+
 
 const AdminReservation = () => {
   const [reservations, setReservations] = useState([]);
   const [tableName, setTableName] = useState('');
   const [creating, setCreating] = useState(false);
 
+  const token = localStorage.getItem("token"); // ✅ Get token directly from localStorage
+
   useEffect(() => {
     fetchReservations();
   }, []);
 
+  
   const fetchReservations = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API}/reservation/admin/all`);
+      const res = await axios.get(`${BASE_URL}/api/reservation/admin/all`);
       setReservations(res.data.data || []);
     } catch (err) {
-      console.error('Error fetching reservations:', err);
+      console.error("Error fetching reservations:", err);
     }
   };
 
@@ -28,15 +33,20 @@ const AdminReservation = () => {
 
     setCreating(true);
     try {
-      await axios.post(`${import.meta.env.VITE_API}/reservation/admin/table/create`, { name: tableName });
-      alert('Table created successfully!');
-      setTableName('');
+      await axios.post(
+        `${BASE_URL}/api/reservation/admin/table/create`,
+        { name: tableName }
+      );
+      alert("Table created successfully!");
+      setTableName("");
+      fetchReservations();
     } catch (error) {
-      alert('Failed to create table');
+      alert("Failed to create table");
     } finally {
       setCreating(false);
     }
   };
+
 
   return (
     <div className="admin-reservations">

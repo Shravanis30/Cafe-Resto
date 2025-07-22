@@ -3,6 +3,9 @@
 // import FoodItem from '../FoodItem/FoodItem';
 // import { StoreContext } from '../../Context/StoreContext';
 
+// // ✅ Define API base URL once at the top
+// const url = import.meta.env.VITE_API || 'https://cafe-resto-production.up.railway.app';
+
 // const FoodDisplay = ({ category }) => {
 //   const { food_list } = useContext(StoreContext);
 
@@ -13,19 +16,13 @@
 //         {food_list.length > 0 &&
 //           food_list.map((item, index) => {
 //             if (category === 'All' || category === item.category) {
-//               const imageUrl = `${import.meta.env.VITE_API}/images/${item.image}`;
-//               console.log("Rendering item:", {
-//                 id: item._id,
-//                 name: item.name,
-//                 image: item.image,
-//                 imageUrl,
-//               });
-//               console.log("Image URL:", `${import.meta.env.VITE_API}/images/${item.image}`);
-
+//               const imageUrl = item.image?.startsWith('http')
+//                 ? item.image
+//                 : `${url}/images/${item.image}`;
 
 //               return (
 //                 <FoodItem
-//                   key={`${item._id}-${index}`}  // make key unique just in case
+//                   key={`${item._id}-${index}`}
 //                   image={imageUrl}
 //                   name={item.name}
 //                   desc={item.description}
@@ -44,43 +41,59 @@
 // export default FoodDisplay;
 
 
-
-
 import React, { useContext } from 'react';
 import './FoodDisplay.css';
 import FoodItem from '../FoodItem/FoodItem';
 import { StoreContext } from '../../Context/StoreContext';
 
-// ✅ Define API base URL once at the top
 const url = import.meta.env.VITE_API || 'https://cafe-resto-production.up.railway.app';
 
 const FoodDisplay = ({ category }) => {
   const { food_list } = useContext(StoreContext);
 
+  // Dynamic heading
+  const displayHeading =
+    category === 'All' ? 'Top Dishes' : `${category} Items`;
+
+  // Group top 2 items by category (for All)
+  const getTopTwoPerCategory = () => {
+    const grouped = {};
+    food_list.forEach(item => {
+      if (!grouped[item.category]) grouped[item.category] = [];
+      if (grouped[item.category].length < 2) {
+        grouped[item.category].push(item);
+      }
+    });
+
+    // flatten into array
+    return Object.values(grouped).flat();
+  };
+
+  const filteredItems =
+    category === 'All'
+      ? getTopTwoPerCategory()
+      : food_list.filter(item => item.category === category);
+
   return (
     <div className="food-display" id="food-display">
-      <h2>Top dishes</h2>
+      <h2>{displayHeading}</h2>
       <div className="food-display-list">
-        {food_list.length > 0 &&
-          food_list.map((item, index) => {
-            if (category === 'All' || category === item.category) {
-              const imageUrl = item.image?.startsWith('http')
-                ? item.image
-                : `${url}/images/${item.image}`;
+        {filteredItems.map((item, index) => {
+          const imageUrl = item.image?.startsWith('http')
+            ? item.image
+            : `${url}/images/${item.image}`;
 
-              return (
-                <FoodItem
-                  key={`${item._id}-${index}`}
-                  image={imageUrl}
-                  name={item.name}
-                  desc={item.description}
-                  price={item.price}
-                  id={item._id}
-                />
-              );
-            }
-            return null;
-          })}
+          return (
+            <FoodItem
+              key={`${item._id}-${index}`}
+              image={imageUrl}
+              name={item.name}
+              desc={item.description}
+              price={item.price}
+              id={item._id}
+            />
+          );
+        })}
       </div>
     </div>
   );

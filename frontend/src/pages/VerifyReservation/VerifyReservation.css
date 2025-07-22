@@ -1,0 +1,39 @@
+/* VerifyReservation.css */
+
+.verify-container {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.verify-container h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #1d3557;
+}
+
+.verify-container p {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.verify-container button {
+  background-color: #1d3557;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.verify-container button:hover {
+  background-color: #457b9d;
+}

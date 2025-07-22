@@ -61,7 +61,10 @@ import About from './pages/About/About';
 import Menu from './pages/Menu/Menu';
 import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton'; // ✅ NEW
 import ReserveTable from './pages/ReservationTable/ReserveTable';
-
+import VerifyReservation from './pages/VerifyReservation/VerifyReservation';
+import Contact from './pages/Contact/Contact';
+import ReservationFailed from './pages/ReservationFailed/ReservationFailed';
+import ReservationSuccess from './pages/ReservationSuccess/ReservationSuccess';
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
 
@@ -80,10 +83,15 @@ const App = () => {
           <Route path='/about' element={<About />} />
           <Route path='/menu' element={<Menu />} />
           <Route path='/reserve-table' element={<ReserveTable />} />
+          <Route path="/verify-reservation" element={<VerifyReservation />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/reservation-failed" element={<ReservationFailed />} />
+          <Route path="/reservation-success" element={<ReservationSuccess />} />
+
         </Routes>
       </div>
 
-      <WhatsAppButton /> {/* ✅ Button visible on all routes */}
+      <WhatsAppButton /> 
       <Footer />
     </>
   );
