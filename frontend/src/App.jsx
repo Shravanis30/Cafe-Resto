@@ -65,6 +65,7 @@ import VerifyReservation from './pages/VerifyReservation/VerifyReservation';
 import Contact from './pages/Contact/Contact';
 import ReservationFailed from './pages/ReservationFailed/ReservationFailed';
 import ReservationSuccess from './pages/ReservationSuccess/ReservationSuccess';
+import TrackOrder from './pages/TrackOrder/TrackOrder';
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
 
@@ -87,11 +88,12 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/reservation-failed" element={<ReservationFailed />} />
           <Route path="/reservation-success" element={<ReservationSuccess />} />
+          <Route path="/track-order" element={<TrackOrder />} />
 
         </Routes>
       </div>
 
-      <WhatsAppButton /> 
+      <WhatsAppButton />
       <Footer />
     </>
   );

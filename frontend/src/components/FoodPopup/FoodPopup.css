@@ -134,3 +134,98 @@
   font-size: 1.1rem;
   font-weight: 500;
 }
+
+.food-popup {
+  max-width: 640px;
+  padding: 2.5rem;
+}
+
+.popup-buy-btn {
+  background-color: #fb5908;
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.popup-buy-btn:hover {
+  background-color: #ec7134;
+}
+
+
+.food-popup {
+  max-width: 700px;
+  width: 100%;
+  padding: 2.2rem;
+  border-radius: 14px;
+  position: relative;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.2);
+}
+
+.food-popup-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.food-popup-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 1.4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.popup-btn {
+  background-color: #ff6a00;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.popup-btn.buy {
+  background-color: #2ede43;
+}
+
+.popup-btn:hover {
+  opacity: 0.9;
+}
+
+.popup-counter {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.popup-counter button {
+  font-size: 1.2rem;
+  padding: 0.6rem 1rem;
+  background-color: #ff6f00;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.popup-counter button:hover {
+  background-color: #ff8340;
+}
+
+.popup-counter span {
+  font-size: 1.1rem;
+}

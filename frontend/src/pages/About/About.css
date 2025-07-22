@@ -278,3 +278,32 @@
     max-width: 320px;
   }
 }
+
+
+.chef-circle-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 270px; /* Larger orange circle */
+  height: 270px;
+  background: var(--orange);
+  border-radius: 50%;
+  position: relative;
+}
+
+.about-chef-img-rect {
+  width: 220px; /* keep image's original dimensions */
+  height: auto;
+  border-radius: 14px; /* slight rounding, not circular */
+  object-fit: cover;
+  position: absolute;
+}
+@media (max-width: 900px) {
+  .chef-circle-bg {
+    width: 160px;
+    height: 160px;
+  }
+  .about-chef-img-rect {
+    width: 120px;
+  }
+}

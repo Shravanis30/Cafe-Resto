@@ -1,0 +1,200 @@
+.trackorder-root {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 10px 20px 10px;
+  background: #fcfdfe;
+  min-height: 100vh;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 32px rgba(80, 100, 150, 0.08);
+  padding: 26px 24px;
+  margin-bottom: 20px;
+  width: 350px;
+  max-width: 100vw;
+}
+
+.trackorder-status { min-width: 300px; flex: 1; }
+.trackorder-details { min-width: 310px; flex: 1; }
+
+.trackorder-header {
+  margin-bottom: 7px;
+}
+.oid { font-weight: 600; font-size: 1.03rem; }
+.oid-link { color: #0796ff; cursor: pointer; }
+.order-date { color: #868d98; font-size: 0.92rem; margin-top: 1px; }
+
+.order-type, .addr-title, .order-addr-block, .paymentinfo-block {
+  margin: 8px 0 5px 0;
+  font-size: 1.01rem;
+}
+.order-type .muted { color: #bbb; }
+.delivery-time-block {
+  margin: 20px 0 18px 0;
+  text-align: center;
+}
+.delivery-label {
+  color: #babfcf;
+  font-size: 0.92rem;
+  font-weight: 570;
+  display: block;
+}
+.delivery-minutes {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #222;
+  margin: 10px 0 7px 0;
+}
+.delivery-success {
+  font-size: 2.2rem;
+  color: #14ca6d;
+  margin-bottom: 7px;
+}
+.got-order-text {
+  color: #222;
+  font-size: 1.1rem;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+.tracking-steps {
+  display: flex;
+  margin: 18px 0 10px 0;
+  align-items: center;
+  justify-content: space-between;
+}
+.track-step { text-align: center; flex: 1; }
+.track-step .circle {
+  height: 16px; width: 16px;
+  background: #f1f3f7;
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 3px;
+  border: 2px solid #e1e5ee;
+}
+.track-step.active .circle {
+  background: #1475ff;
+  border-color: #1475ff;
+}
+.track-step span {
+  color: #6a6e7c;
+  font-size: 12px;
+  margin-top: 2px;
+  display: block;
+  font-weight: 500;
+}
+
+.addr-title { font-weight: 600; font-size: 1.01rem; }
+.addr-info { color: #222; font-size: 0.98rem; margin-top: 6px; }
+.addr-phone {
+  display: inline-block;
+  margin-top: 11px;
+  color: #0796ff;
+  font-size: 1.4rem;
+  background: #eaf5ff;
+  padding: 7px 10px;
+  border-radius: 50%;
+  margin-left: 9px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.paymentinfo-block { margin-top: 20px; }
+.status-unpaid {
+  color: #f45548;
+  font-weight: 700;
+}
+
+.details-header {
+  font-weight: 700;
+  font-size: 1.12rem;
+  margin-bottom: 18px;
+  letter-spacing: 0.2px;
+}
+.details-items {display: flex; flex-direction: column; gap: 14px;}
+.details-item {
+  display: flex;
+  align-items: flex-start;
+  background: #fafbfc;
+  border-radius: 13px;
+  padding: 10px;
+}
+.details-item img {
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 13px;
+  background: #f8f7f4;
+}
+.details-item-desc { position: relative; flex: 1;}
+.item-qty {
+  position: absolute; left: -18px; top: -7px;
+  background: #21243d;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: bold;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.item-title {
+  font-weight: 600;
+  color: #1e2431;
+  font-size: 1.04rem;
+  margin-bottom: 0;
+}
+.item-option {
+  color: #868a98;
+  font-size: 0.95rem;
+  margin: 3px 0;
+}
+.item-price { font-weight: 700; font-size: 1rem; color: #222; margin-top: 2px; }
+
+.details-total-block {
+  margin: 20px 0 12px 0;
+  font-size: 1.04rem;
+  border-top: 1.5px solid #f1f1f1;
+  padding-top: 13px;
+}
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.total-row span:last-child {font-size: 1.19rem; font-weight: 800;}
+.print-btn {
+  width: 100%;
+  padding: 13px;
+  background: #19c07c;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 650;
+  border: none;
+  border-radius: 25px;
+  margin-top: 10px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.print-btn:hover { background: #16a86e; }
+
+@media (max-width: 950px) {
+  .trackorder-root { flex-direction: column; align-items: stretch; }
+  .card {
+    width: 100%; max-width: 600px;
+    margin-left: auto; margin-right: auto;
+  }
+  .trackorder-status, .trackorder-details { min-width: unset; }
+}
+@media (max-width: 540px) {
+  .trackorder-root { padding: 8px 1px; }
+  .card { padding: 11px 4vw 13px 4vw; border-radius: 11px; }
+  .details-header { font-size: 1rem; }
+  .delivery-minutes { font-size: 1.2rem;}
+}
