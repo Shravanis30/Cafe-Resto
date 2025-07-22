@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home/Home'
 import AdminReservation from './pages/AdminReservation/AdminReservation'
+import AdminDashboard from './pages/AdminDashboard/AdminDashboard'
 
 const App = () => {
   return (
@@ -21,7 +22,8 @@ const App = () => {
       <div className="app-content">
         <Sidebar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<AdminDashboard />} />
           <Route path="/add" element={<Add />} />
           <Route path="/list" element={<List />} />
           <Route path="/orders" element={<Orders />} />

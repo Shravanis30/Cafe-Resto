@@ -141,7 +141,10 @@ import Stripe from 'stripe';
 dotenv.config(); // If not already called in entry file
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const FRONTEND_URLS = process.env.FRONTEND_URLS || 'http://localhost:5173';
+// const FRONTEND_URLS = process.env.FRONTEND_URLS || 'http://localhost:5173';
+
+const ALL_URLS = process.env.FRONTEND_URLS?.split(',') || [];
+const FRONTEND_URLS = ALL_URLS[0]; // Choose the first one or based on logic
 
 // ✅ Get Available Tables
 export const getTables = async (req, res) => {

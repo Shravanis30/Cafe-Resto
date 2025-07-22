@@ -73,17 +73,7 @@ const Home = () => {
 
   return (
     <div className="dashboard-container">
-      {/* Header */}
-      <div className="dashboard-header">
-        <div className="left">
-          <h2>Restaurant Dashboard</h2>
-          <p><span>Home</span> / <span className="active">Dashboard</span></p>
-        </div>
-        <div className="right">
-          <button className="btn-manage">Manage Dashboard</button>
-          <button className="btn-create">+ Create New Reservation</button>
-        </div>
-      </div>
+
 
       {/* Summary Cards */}
       <div className="dashboard-summary">

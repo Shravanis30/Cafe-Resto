@@ -364,6 +364,11 @@ const Add = () => {
               <option value="Pure Veg">Pure Veg</option>
               <option value="Pasta">Pasta</option>
               <option value="Noodles">Noodles</option>
+              <option value="Cold Drink">Cold Drinks</option>
+              <option value="Hot Drink">Hot Drinks</option>
+              <option value="Snacks">Snacks</option>
+              <option value="Ice-Cream">Ice-Cream</option>
+              <option value="Soups">Soups</option>
             </select>
           </div>
 
