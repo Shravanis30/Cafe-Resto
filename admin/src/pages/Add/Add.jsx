@@ -257,7 +257,7 @@ const Add = () => {
     category: 'Salad',
   });
 
-  const api = import.meta.env.VITE_API;
+  const api = import.meta.env.VITE_API || 'https://cafe-resto-production.up.railway.app';
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
